@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WAGB UTM Link Builder</title>
+<style>
+  *{box-sizing:border-box}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    margin:0;background:#fff8f1;color:#1f2d3d;padding:20px}
+  .wrap{max-width:560px;margin:0 auto}
+  h1{color:#0f2a4a;font-size:1.4rem;margin:0 0 4px}
+  p.sub{color:#6b7a8d;font-size:.9rem;margin:0 0 6px}
+  p.rule{background:#0f2a4a;color:#fff;border-radius:10px;padding:10px 14px;font-size:.82rem;
+    margin:0 0 14px;line-height:1.5}
+  p.rule code{background:rgba(255,255,255,.15);padding:1px 6px;border-radius:5px}
+  label{display:block;font-size:.8rem;font-weight:700;color:#0f2a4a;margin:14px 0 6px;
+    text-transform:uppercase;letter-spacing:.04em}
+  input,select{width:100%;padding:12px;border:2px solid #f0e2d2;border-radius:10px;
+    font-size:1rem;background:#fff;color:#1f2d3d}
+  input:focus,select:focus{outline:none;border-color:#ff7a1a}
+  .hint{font-size:.78rem;color:#6b7a8d;margin-top:5px}
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .out{background:#0f2a4a;border-radius:12px;padding:16px;margin-top:20px}
+  .out small{color:#9fb3c8;text-transform:uppercase;letter-spacing:.06em;font-size:.72rem}
+  .out .url{color:#fff;word-break:break-all;font-size:.92rem;margin:8px 0 4px;line-height:1.5}
+  .tags{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 12px}
+  .tags span{background:rgba(255,255,255,.12);color:#cfe0f4;font-size:.75rem;
+    padding:3px 9px;border-radius:12px;font-family:ui-monospace,monospace}
+  .out .btns{display:flex;gap:10px}
+  .out button{flex:1;padding:12px;border:none;border-radius:10px;font-weight:800;
+    font-size:.95rem;cursor:pointer}
+  .out button:active{transform:scale(.97)}
+  .copy{background:#ff7a1a;color:#fff}
+  .open{background:#fff;color:#0f2a4a}
+  .copied{color:#7CFC9a;font-size:.8rem;margin-top:8px;display:none}
+  .warn{color:#ffb3b3;font-size:.82rem;margin-top:8px;display:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>🐶 WAGB UTM Link Builder</h1>
+  <p class="sub">Who's A Good Boy Pet Accessories &amp; Toys — strict campaign naming for the whole team.</p>
+  <p class="rule">Naming convention: <code>lowercase-hyphenated</code> — e.g. <code>q4-launch-chew-toys</code>.
+    Spaces and capitals are auto-fixed.</p>
+
+  <label for="base">Base Product URL</label>
+  <input id="base" value="https://whosagoodboypets.myshopify.com/products/durable-training-bite-stick-dog-toy">
+
+  <div class="row">
+    <div>
+      <label for="channel">Ad Channel</label>
+      <select id="channel">
+        <option value="meta">Meta</option>
+        <option value="tiktok">TikTok</option>
+        <option value="google">Google</option>
+        <option value="pinterest">Pinterest</option>
+        <option value="custom">Custom…</option>
+      </select>
+      <input id="channel_c" placeholder="custom channel" style="display:none;margin-top:8px">
+    </div>
+    <div>
+      <label for="placement">Ad Placement</label>
+      <select id="placement">
+        <option value="feed">Feed</option>
+        <option value="story">Story</option>
+        <option value="search">Search</option>
+        <option value="reel">Reel</option>
+        <option value="custom">Custom…</option>
+      </select>
+      <input id="placement_c" placeholder="custom placement" style="display:none;margin-top:8px">
+    </div>
+  </div>
+
+  <label for="campaign">Campaign Name</label>
+  <input id="campaign" placeholder="e.g. Q4 Launch Chew Toys">
+  <div class="hint">Becomes <span id="campaignPreview" style="font-family:ui-monospace,monospace">—</span></div>
+
+  <label for="promo">Promo Code</label>
+  <input id="promo" value="GOODBOY20" placeholder="e.g. GOODBOY20">
+  <div class="hint">Appended as <code>promo=</code> so the team always knows which offer the ad pushes.</div>
+
+  <div class="out">
+    <small>Tracking link — updates automatically</small>
+    <div class="url" id="out">—</div>
+    <div class="tags" id="tags"></div>
+    <div class="warn" id="warn">⚠ Enter a valid product URL starting with http.</div>
+    <div class="btns">
+      <button class="copy" id="copyBtn">Copy Link</button>
+      <button class="open" id="openBtn">Open</button>
+    </div>
+    <div class="copied" id="copied">✓ Copied to clipboard</div>
+  </div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var $ = function(id){ return document.getElementById(id); };
+
+  // Channel -> medium mapping keeps reporting consistent across the team.
+  var MEDIUM = { meta:"paid_social", tiktok:"paid_social", pinterest:"paid_social", google:"cpc" };
+
+  // Strict naming convention: lowercase, hyphenated, no special chars.
+  function clean(s){
+    return s.trim().toLowerCase()
+      .replace(/[\s_]+/g, "-")
+      .replace(/[^a-z0-9-]/g, "")
+      .replace(/-+/g, "-")
+      .replace(/^-|-$/g, "");
+  }
+
+  function fieldVal(selId, customId){
+    var s = $(selId).value;
+    return clean(s === "custom" ? $(customId).value : s);
+  }
+
+  function build(){
+    var base = $("base").value.trim().replace(/[?#].*$/, "");
+    var ok = /^https?:\/\/.+\..+/.test(base);
+    var channel = fieldVal("channel","channel_c");
+    var placement = fieldVal("placement","placement_c");
+    var campaign = clean($("campaign").value);
+    var promo = $("promo").value.trim().toUpperCase().replace(/[^A-Z0-9_-]/g, "");
+
+    $("campaignPreview").textContent = campaign || "—";
+    $("warn").style.display = ok ? "none" : "block";
+
+    var params = [
+      ["utm_source", channel],
+      ["utm_medium", MEDIUM[channel] || "paid"],
+      ["utm_campaign", campaign],
+      ["utm_content", placement],
+      ["promo", promo]
+    ].filter(function(p){ return p[1]; })
+     .map(function(p){ return p[0] + "=" + encodeURIComponent(p[1]); });
+
+    var url = ok ? base + (params.length ? "?" + params.join("&") : "") : "—";
+    $("out").textContent = url;
+
+    $("tags").innerHTML = params.map(function(p){
+      return "<span>" + p[0] + "=" + decodeURIComponent(p[1]) + "</span>";
+    }).join("");
+    $("copied").style.display = "none";
+    return url;
+  }
+
+  ["base","channel","channel_c","placement","placement_c","campaign","promo"]
+    .forEach(function(id){
+      $(id).addEventListener("input", build);
+      $(id).addEventListener("change", build);
+    });
+
+  [["channel","channel_c"],["placement","placement_c"]].forEach(function(p){
+    $(p[0]).addEventListener("change", function(){
+      $(p[1]).style.display = $(p[0]).value === "custom" ? "block" : "none";
+    });
+  });
+
+  $("copyBtn").addEventListener("click", function(){
+    var t = build();
+    if (t === "—") return;
+    function done(){ $("copied").style.display = "block"; }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(t).then(done, done);
+    } else {
+      var ta = document.createElement("textarea");
+      ta.value = t; document.body.appendChild(ta); ta.select();
+      try { document.execCommand("copy"); } catch(e){}
+      document.body.removeChild(ta); done();
+    }
+  });
+
+  $("openBtn").addEventListener("click", function(){
+    var t = build();
+    if (t !== "—") window.open(t, "_blank", "noopener");
+  });
+
+  build();
+})();
+</script>
+</body>
+</html>
