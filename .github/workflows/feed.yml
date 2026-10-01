@@ -1,0 +1,36 @@
+name: Generate Ad Product Feed
+
+on:
+  schedule:
+    - cron: '0 */12 * * *' # Runs every 12 hours
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-feed:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Fetch and Generate Feed
+        run: python generate_feed.py
+
+      - name: Commit and Push Updated Feed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add catalog.xml
+          if git diff --cached --quiet; then
+            echo "No changes to catalog.xml"
+          else
+            git commit -m "Auto-update ad catalog feed ($(date -u +%Y-%m-%d))"
+            git push
+          fi

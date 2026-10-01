@@ -1,0 +1,39 @@
+name: Inventory Guardrail
+
+on:
+  schedule:
+    - cron: "0 */6 * * *" # every 6 hours
+  workflow_dispatch: # manual runs from the Actions tab
+
+permissions:
+  contents: write
+
+jobs:
+  stock-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Check featured product inventory
+        env:
+          SHOPIFY_STORE_DOMAIN: ${{ secrets.SHOPIFY_STORE_DOMAIN }}
+          SHOPIFY_ADMIN_TOKEN: ${{ secrets.SHOPIFY_ADMIN_TOKEN }}
+        run: python scripts/stock_check.py
+
+      - name: Commit featured.json if swapped
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add landing-pages/featured.json
+          if git diff --cached --quiet; then
+            echo "No buy-link swaps needed"
+          else
+            git commit -m "Guardrail: swap low-stock featured buy link ($(date -u +%Y-%m-%dT%H:%M))"
+            git push
+          fi
