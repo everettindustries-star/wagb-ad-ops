@@ -1,0 +1,16 @@
+{
+  "chew": {
+    "fallback_handle": "waterproof-squeak-dog-toy-ball",
+    "fallback_url": "https://whosagoodboypets.myshopify.com/products/waterproof-squeak-dog-toy-ball?utm_source=guardrail&utm_medium=landing_page&utm_campaign=featured",
+    "handle": "durable-training-bite-stick-dog-toy",
+    "primary_url": "https://whosagoodboypets.myshopify.com/products/durable-training-bite-stick-dog-toy?utm_source=guardrail&utm_medium=landing_page&utm_campaign=featured",
+    "url": "https://whosagoodboypets.myshopify.com/products/durable-training-bite-stick-dog-toy?utm_source=guardrail&utm_medium=landing_page&utm_campaign=featured"
+  },
+  "fetch": {
+    "fallback_handle": "durable-training-bite-stick-dog-toy",
+    "fallback_url": "https://whosagoodboypets.myshopify.com/products/durable-training-bite-stick-dog-toy?utm_source=guardrail&utm_medium=landing_page&utm_campaign=featured",
+    "handle": "waterproof-squeak-dog-toy-ball",
+    "primary_url": "https://whosagoodboypets.myshopify.com/products/waterproof-squeak-dog-toy-ball?utm_source=guardrail&utm_medium=landing_page&utm_campaign=featured",
+    "url": "https://whosagoodboypets.myshopify.com/products/waterproof-squeak-dog-toy-ball?utm_source=guardrail&utm_medium=landing_page&utm_campaign=featured"
+  }
+}
