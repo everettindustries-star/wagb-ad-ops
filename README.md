@@ -49,7 +49,7 @@ my-pet-store-ad-ops/
 
 - UTM every outbound link: `utm_source` / `utm_medium` / `utm_campaign`
   (use `tools/utm_builder.html` to generate them).
-- Only real promos in copy: `GOODBOY20` = 20% off, ends Oct 8, 2026.
+- Only real promos in copy: `HOLIDAY15` = 15% off the Holiday Gifts & Bundles collection, ends Dec 26, 2026.
   Never invent discounts, reviews, ratings, or customer counts.
 - Prices and product names come from the live store — re-verify before each campaign.
 

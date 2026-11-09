@@ -1,12 +1,12 @@
 # Video Scripts — TikTok & Instagram Reels
 
 **Store:** Who's A Good Boy Pet Accessories & Toys
-**Live promo:** 20% off everything with code `GOODBOY20` — ends Oct 8, 2026
-**Trust badges:** Free shipping over $70 · 14-day returns · Secure checkout
+**Live promo:** 15% off gifts & bundles with code HOLIDAY15 — through Dec 26, 2026
+**Trust badges:** Free shipping on all orders · 14-day returns · Secure checkout
 
 ## Compliance rules (do not break in ad copy)
 
-- Only the real promo: 20% off with GOODBOY20, ends Oct 8. Never invent discounts.
+- Only the real promo: HOLIDAY15, 15% off the Holiday Gifts & Bundles collection only, ends Dec 26, 2026. Never invent discounts.
 - Never invent reviews, ratings, customer counts, awards, or "as seen on" claims.
 - Use real product names and real prices (verified 2026-09-30).
 - UTM every link: `?utm_source={meta|tiktok}&utm_medium=paid_social&utm_campaign=q4-launch-{n}`
@@ -30,16 +30,16 @@ Creator dumps a box of shredded plush toys on the floor. Deadpan to camera:
 - Demo: dog goes to town on it; cut to it intact. *"Still in one piece. That's the whole pitch."*
 
 **CALL-TO-ACTION (18–25s):**
-*"20% off everything right now with code GOODBOY20 — but it ends October 8th. Link's below. Who's a good boy? Yours, once he's got something legal to destroy."*
+*"15% off gifts & bundles right now with code HOLIDAY15 — but it ends December 26th. Link's below. Who's a good boy? Yours, once he's got something legal to destroy."*
 On-screen: product card + code + `Shop Now` button.
 
 ---
 
 ## Script 2 — "Does Your Dog Have a Record?"
 
-**Products:** Waterproof Squeak Dog Toy Ball — $15.99 · Ergonomic harnesses (collection)
+**Products:** Interactive Squeaky Dog Toy — $35.99 · Ergonomic harnesses (collection)
 **Links:**
-- `/products/waterproof-squeak-dog-toy-ball?utm_source=tiktok&utm_medium=paid_social&utm_campaign=q4-launch-2`
+- `/products/interactive-squeaky-dog-toy?utm_source=tiktok&utm_medium=paid_social&utm_campaign=q4-launch-2`
 - `/collections/harnesses?utm_source=tiktok&utm_medium=paid_social&utm_campaign=q4-launch-2`
 **Format:** 9:16 vertical, 20–30s, comedic "mugshot" framing, captions on
 
@@ -50,12 +50,12 @@ Voiceover: *"Does your dog have a record?"*
 
 **CORE PROBLEM / SOLUTION (3–20s):**
 - Problem: *"High-energy dogs don't need discipline. They need a job — and better gear."*
-- Solution beat 1: squeak ball flying across a yard, dog sprinting after it. *"The Waterproof Squeak Ball. Sixteen bucks. Fetch until the record expunges itself."*
+- Solution beat 1: squeak ball flying across a yard, dog sprinting after it. *"The Interactive Squeaky Dog Toy. Thirty-six bucks. Fetch until the record expunges itself."*
 - Solution beat 2: clip on the harness. *"And a no-pull harness, so walks stop feeling like a prison break."*
 - Payoff: dog happily exhausted, flopped on the floor. *"Rehabilitated."*
 
 **CALL-TO-ACTION (20–30s):**
-*"We're Who's A Good Boy — we sell redemption. 20% off everything with GOODBOY20, ends October 8th. Free shipping over $70. Link below."*
+*"We're Who's A Good Boy — we sell redemption. 15% off gifts & bundles with HOLIDAY15 through December 26. Free shipping on all orders. Link below."*
 On-screen: both product cards + code + `Shop Now` button.
 
 ---
@@ -76,5 +76,5 @@ POV shot: dog lunging forward, owner yanked along, collar riding up.
 - Demo: same dog, same street, calm loose-leash walk. Split screen before/after.
 
 **CALL-TO-ACTION (15–20s):**
-*"20% off with code GOODBOY20 until October 8th. Your dog walks better, your arm thanks you. Link below."*
+*"15% off gifts & bundles with code HOLIDAY15 until December 26th. Your dog walks better, your arm thanks you. Link below."*
 On-screen: collection card + code + `Shop Now` button.

@@ -10,7 +10,7 @@ variation honest — no invented stats, reviews, discounts, or "as seen on" clai
 ## How to use this template
 
 1. Replace `[PRODUCT]` with the real product name and `[PRICE]` with its real price.
-2. Keep the live promo only: 20% off with `GOODBOY20`, ends Oct 8, 2026.
+2. Keep the live promo only: 15% off gifts & bundles with `HOLIDAY15`, ends Dec 26, 2026.
 3. Generate one variation per framework below. Test all 10 as separate creatives
    with UTM-tagged links (`tools/utm_builder.html`) and keep the winner.
 
@@ -18,15 +18,15 @@ variation honest — no invented stats, reviews, discounts, or "as seen on" clai
 
 ### 1. Problem–Agitate–Solve
 > Your dog kills every toy in 5 minutes. Then he's bored, then your shoes die.
-> The [PRODUCT] ([PRICE]) is built for exactly that dog. 20% off with GOODBOY20.
+> The [PRODUCT] ([PRICE]) is built for exactly that dog. 15% off gifts & bundles with HOLIDAY15.
 
 ### 2. Fear of Missing Out (real deadline only)
-> GOODBOY20 — 20% off everything — ends October 8th. If your dog destroys toys
+> HOLIDAY15 — 15% off gifts & bundles — ends December 26th. If your dog destroys toys
 > in 5 minutes, this is the week to fix it.
 
 ### 3. Social Proof (no fake numbers)
 > The toy dogs can't kill: [PRODUCT]. Built for power chewers, [PRICE],
-> and 20% off with GOODBOY20 until Oct 8.
+> and 15% off gifts & bundles with HOLIDAY15 until Dec 26.
 
 ### 4. Pattern Interrupt
 > Stop buying your dog stuffed animals. Seriously. If he destroys toys in
@@ -34,34 +34,34 @@ variation honest — no invented stats, reviews, discounts, or "as seen on" clai
 
 ### 5. Curiosity Gap
 > I gave my power chewer the [PRODUCT] and filmed what happened at minute 6.
-> ([PRICE], 20% off with GOODBOY20.)
+> ([PRICE], 15% off gifts & bundles with HOLIDAY15.)
 
 ### 6. Direct Call-Out
 > This is for the owner whose dog destroys toys in 5 minutes. You know who
-> you are. [PRODUCT] — [PRICE] — GOODBOY20 for 20% off.
+> you are. [PRODUCT] — [PRICE] — HOLIDAY15 for 15% off gifts & bundles.
 
 ### 7. Before / After
 > Before: toy graveyard by noon. After: one [PRODUCT] ([PRICE]), still alive
-> at dinner. 20% off with GOODBOY20.
+> at dinner. 15% off gifts & bundles with HOLIDAY15.
 
 ### 8. Story (micro)
 > My dog destroyed toys in 5 minutes flat — until the [PRODUCT]. Three weeks
-> later it's still in one piece. [PRICE], 20% off with GOODBOY20.
+> later it's still in one piece. [PRICE], 15% off gifts & bundles with HOLIDAY15.
 
 ### 9. Risk Reversal (real policy only)
 > If your dog destroys toys in 5 minutes, try the [PRODUCT] ([PRICE]).
-> 14-day returns if it's not the one. 20% off with GOODBOY20.
+> 14-day returns if it's not the one. 15% off gifts & bundles with HOLIDAY15.
 
 ### 10. The Contrarian
 > Your dog doesn't need another cute toy. He needs one he can't destroy in
-> 5 minutes. [PRODUCT] — [PRICE] — 20% off with GOODBOY20, ends Oct 8.
+> 5 minutes. [PRODUCT] — [PRICE] — 15% off gifts & bundles with HOLIDAY15, ends Dec 26.
 
 ---
 
 ## Compliance checklist (run every variation through this)
 
 - [ ] Product name and price are real (verify in Shopify before launching).
-- [ ] Only discount mentioned: GOODBOY20, 20% off, ends Oct 8, 2026.
+- [ ] Only discount mentioned: HOLIDAY15, 15% off gifts & bundles, ends Dec 26, 2026.
 - [ ] No invented review counts, ratings, customer numbers, or awards.
 - [ ] No fake urgency ("only 3 left", countdown timers for nothing).
 - [ ] Link is UTM-tagged per `tools/utm_builder.html` conventions.
