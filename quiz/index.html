@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Find Your Pet's Perfect Match | Who's A Good Boy</title>
+  <style>
+    #pet-quiz{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+      max-width:460px;margin:0 auto;color:#1f2d3d;}
+    #pet-quiz .pq-box{background:#fff;border:1px solid #f0e2d2;border-radius:18px;
+      padding:26px 20px;text-align:center;box-shadow:0 6px 20px rgba(15,42,74,.08);}
+    #pet-quiz .pq-steps{display:flex;gap:6px;justify-content:center;margin-bottom:18px;}
+    #pet-quiz .pq-dot{width:34px;height:6px;border-radius:3px;background:#f0e2d2;}
+    #pet-quiz .pq-dot.on{background:#ff7a1a;}
+    #pet-quiz h3{margin:0 0 6px;color:#0f2a4a;font-size:1.25rem;}
+    #pet-quiz .pq-sub{color:#6b7a8d;font-size:.9rem;margin:0 0 18px;}
+    #pet-quiz .pq-opt{display:block;width:100%;margin:0 0 10px;padding:14px;
+      background:#fff8f1;border:2px solid #f0e2d2;border-radius:12px;font-size:1rem;
+      font-weight:700;color:#0f2a4a;cursor:pointer;transition:border-color .12s,transform .08s;}
+    #pet-quiz .pq-opt:hover{border-color:#ff7a1a;}
+    #pet-quiz .pq-opt:active{transform:scale(.98);}
+    #pet-quiz .pq-back{background:none;border:none;color:#6b7a8d;font-size:.85rem;
+      margin-top:6px;cursor:pointer;text-decoration:underline;}
+    #pet-quiz .pq-card img{width:100%;border-radius:12px;display:block;margin-bottom:14px;background:#fff8f1;}
+    #pet-quiz .pq-card h4{margin:0 0 6px;color:#0f2a4a;font-size:1.15rem;}
+    #pet-quiz .pq-card .pq-why{color:#6b7a8d;font-size:.9rem;margin:0 0 10px;}
+    #pet-quiz .pq-price{font-size:1.4rem;font-weight:800;color:#0f2a4a;margin:0 0 14px;}
+    #pet-quiz .pq-cta{display:block;background:#ff7a1a;color:#fff;text-decoration:none;
+      font-weight:800;font-size:1.05rem;padding:15px;border-radius:12px;margin-bottom:10px;
+      box-shadow:0 6px 16px rgba(255,122,26,.35);}
+    #pet-quiz .pq-cta:active{transform:scale(.98);}
+    #pet-quiz .pq-view{display:inline-block;color:#0f2a4a;font-size:.88rem;font-weight:700;}
+    #pet-quiz .pq-restart{background:none;border:none;color:#6b7a8d;font-size:.85rem;
+      margin-top:14px;cursor:pointer;text-decoration:underline;}
+    #pet-quiz .pq-email{display:flex;gap:8px;margin-top:14px;}
+    #pet-quiz .pq-email input{flex:1;padding:11px 12px;border:2px solid #f0e2d2;
+      border-radius:10px;font-size:.92rem;min-width:0;}
+    #pet-quiz .pq-email input:focus{outline:none;border-color:#ff7a1a;}
+    #pet-quiz .pq-email button{background:#0f2a4a;color:#fff;border:none;border-radius:10px;
+      padding:0 16px;font-weight:800;cursor:pointer;}
+    #pet-quiz .pq-sent{color:#1c7c3e;font-size:.85rem;font-weight:700;margin-top:8px;}
+  </style>
+</head>
+<body>
+  <div id="pet-quiz"></div>
+
+  <script>
+  (function(){
+    "use strict";
+    var STORE = "https://whosagoodboypets.myshopify.com";
+    var UTM = "utm_source=quiz&utm_medium=widget&utm_campaign=pet-quiz";
+    // Paste your Zapier Catch Hook URL or Klaviyo-compatible webhook URL here.
+    // Leave as-is to disable the webhook (the quiz still works without it).
+    var WEBHOOK_URL = "https://hooks.zapier.com/hooks/catch/YOUR_HOOK_ID";
+
+    // Real products, prices, variant IDs and images verified live from the store (2026-11-09).
+    var PRODUCTS = {
+      "dog|chewer": {
+        title: "Durable Training Bite Stick Dog Toy",
+        price: 28.99, variantId: "62685358456913",
+        handle: "durable-training-bite-stick-dog-toy",
+        image: "https://cdn.shopify.com/s/files/1/1075/2960/1105/files/2903501c44f4bd0f2113724401ba.jpg?v=1789837951",
+        why: "Built for power chewers — a tough bite stick made for aggressive chewing and training play."
+      },
+      "dog|runner": {
+        title: "Interactive Squeaky Dog Toy",
+        price: 35.99, variantId: "62691544891473",
+        handle: "interactive-squeaky-dog-toy",
+        image: "https://cdn.shopify.com/s/files/1/1075/2960/1105/files/64a768b3445786144593805a698f.png?v=1789943152",
+        why: "It moves, it squeaks, it darts — a self-play chase toy for high-energy dogs who get bored in four minutes flat."
+      },
+      "dog|lounger": {
+        title: "Fluffy Donut Pet Bed",
+        price: 25.99, variantId: "62691563143249",
+        handle: "fluffy-donut-pet-bed",
+        image: "https://cdn.shopify.com/s/files/1/1075/2960/1105/files/21c2766a485ca2073b64618cb2c9.png?v=1789943332",
+        why: "A plush donut cuddler bed for dogs who take lounging very seriously."
+      },
+      "cat|chewer": {
+        title: "Cat Sucker Teaser Toy",
+        price: 24.99, variantId: "62702855979089",
+        handle: "cat-sucker-teaser-toy",
+        image: "https://cdn.shopify.com/s/files/1/1075/2960/1105/files/bd15667c4025b6af0d638f79cd50.jpg?v=1790076692",
+        why: "A teaser toy that sticks where you put it — irresistible for playful, bitey hunters."
+      },
+      "cat|runner": {
+        title: "PurrPlay Self-Rolling Cat Toy Ball",
+        price: 26.99, variantId: "62679195287633",
+        handle: "purrplay-self-rolling-cat-toy-ball",
+        image: "https://cdn.shopify.com/s/files/1/1075/2960/1105/files/826deb264d5e83f1ef6335303849.png?v=1789755801",
+        why: "A self-rolling ball that keeps high-energy cats chasing, pouncing and playing."
+      },
+      "cat|lounger": {
+        title: "CozyNest Cat Sofa Bed",
+        price: 41.99, variantId: "62679126671441",
+        handle: "cozynest-cat-sofa-bed",
+        image: "https://cdn.shopify.com/s/files/1/1075/2960/1105/files/a9c3f74946058e9bd31f9bcf4c6c.png?v=1789755478",
+        why: "A cozy sofa-style bed for cats who rule the couch and nap like professionals."
+      }
+    };
+
+    var SIZES = {
+      dog: ["Small (under 25 lbs)", "Medium (25\u201360 lbs)", "Large (60+ lbs)"],
+      cat: ["Kitten / Small", "Average", "Large"]
+    };
+
+    var state = { pet: null, trait: null, size: null, step: 1 };
+
+    function el(id){ return document.getElementById(id); }
+
+    function dots(n){
+      var h = '<div class="pq-steps">';
+      for (var i = 1; i <= 3; i++) h += '<div class="pq-dot' + (i <= n ? ' on' : '') + '"></div>';
+      return h + '</div>';
+    }
+
+    function backBtn(){
+      return '<button class="pq-back" id="pqBack" type="button">\u2190 Back</button>';
+    }
+
+    function render(){
+      var box = el('pet-quiz');
+      if (!box) return;
+      var h = '<div class="pq-box">';
+      if (state.step === 1) {
+        h += dots(1)
+          + '<h3>Find Your Pet\u2019s Perfect Match \ud83d\udc3e</h3>'
+          + '<p class="pq-sub">Question 1 of 3: What kind of pet are you shopping for?</p>'
+          + '<button class="pq-opt" data-pet="dog" type="button">\ud83d\udc36 Dog</button>'
+          + '<button class="pq-opt" data-pet="cat" type="button">\ud83d\udc31 Cat</button>';
+      } else if (state.step === 2) {
+        h += dots(2)
+          + '<h3>What best describes them?</h3>'
+          + '<p class="pq-sub">Question 2 of 3: Pick their primary trait.</p>'
+          + '<button class="pq-opt" data-trait="chewer" type="button">\ud83d\udcaa Aggressive Chewer</button>'
+          + '<button class="pq-opt" data-trait="runner" type="button">\u26a1 High Energy Runner</button>'
+          + '<button class="pq-opt" data-trait="lounger" type="button">\ud83d\udecf\ufe0f Indoor Lounger</button>'
+          + backBtn();
+      } else if (state.step === 3) {
+        var sizes = SIZES[state.pet] || [];
+        h += dots(3)
+          + '<h3>What size are they?</h3>'
+          + '<p class="pq-sub">Question 3 of 3: Pick their weight / size class.</p>';
+        for (var i = 0; i < sizes.length; i++) {
+          h += '<button class="pq-opt" data-size="' + i + '" type="button">' + sizes[i] + '</button>';
+        }
+        h += backBtn();
+      } else {
+        h += renderResult();
+      }
+      box.innerHTML = h + '</div>';
+      bind();
+    }
+
+    function renderResult(){
+      var key = state.pet + '|' + state.trait;
+      var p = PRODUCTS[key];
+      var sizeLabel = (SIZES[state.pet] || [])[state.size] || '';
+      var cartUrl = STORE + '/cart/' + p.variantId + ':1?' + UTM;
+      var viewUrl = STORE + '/products/' + p.handle + '?' + UTM;
+      return '<div class="pq-card">'
+        + '<h3>\ud83c\udf89 Your match!</h3>'
+        + '<p class="pq-sub">Picked for ' + sizeLabel.toLowerCase() + ' ' + state.pet + 's.</p>'
+        + '<img src="' + p.image + '" alt="' + p.title.replace(/"/g, '&quot;') + '" loading="lazy">'
+        + '<h4>' + p.title + '</h4>'
+        + '<p class="pq-why">' + p.why + '</p>'
+        + '<p class="pq-price">$' + p.price.toFixed(2) + '</p>'
+        + '<a class="pq-cta" href="' + cartUrl + '">Add to Cart \u2014 $' + p.price.toFixed(2) + '</a>'
+        + '<a class="pq-view" href="' + viewUrl + '">View full product details \u2192</a>'
+        + '<div class="pq-email"><input id="pqEmail" type="email" placeholder="Email me my match" autocomplete="email">'
+        + '<button id="pqSend" type="button">Send</button></div>'
+        + '<div class="pq-sent" id="pqSent" style="display:none">\u2713 Sent! Check your inbox.</div>'
+        + '<br><button class="pq-restart" id="pqRestart" type="button">Retake the quiz</button>'
+        + '</div>';
+    }
+
+    // Fire-and-forget webhook: quiz answers + email -> Zapier/Klaviyo.
+    // Never blocks the result screen; failures are silent.
+    function sendWebhook(email){
+      if (!WEBHOOK_URL || WEBHOOK_URL.indexOf('YOUR_HOOK_ID') !== -1) return;
+      var key = state.pet + '|' + state.trait;
+      var p = PRODUCTS[key];
+      try {
+        fetch(WEBHOOK_URL, {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({
+            event: 'QuizCompleted',
+            pet_type: state.pet,
+            trait: state.trait,
+            size: (SIZES[state.pet] || [])[state.size] || '',
+            email: email,
+            product: p.title,
+            value: p.price,
+            currency: 'USD',
+            timestamp: new Date().toISOString()
+          })
+        }).catch(function(){});
+      } catch(e){}
+    }
+
+    function firePixel(){
+      if (typeof fbq !== 'undefined') {
+        var key = state.pet + '|' + state.trait;
+        var p = PRODUCTS[key];
+        fbq('trackCustom', 'QuizCompleted', {
+          pet_type: state.pet,
+          trait: state.trait,
+          size: (SIZES[state.pet] || [])[state.size] || '',
+          product: p.title,
+          value: p.price,
+          currency: 'USD'
+        });
+      }
+    }
+
+    function bind(){
+      var opts = document.querySelectorAll('#pet-quiz .pq-opt');
+      for (var i = 0; i < opts.length; i++) {
+        (function(btn){
+          btn.addEventListener('click', function(){
+            if (btn.hasAttribute('data-pet')) { state.pet = btn.getAttribute('data-pet'); state.step = 2; }
+            else if (btn.hasAttribute('data-trait')) { state.trait = btn.getAttribute('data-trait'); state.step = 3; }
+            else if (btn.hasAttribute('data-size')) {
+              state.size = parseInt(btn.getAttribute('data-size'), 10);
+              state.step = 4;
+              render();
+              firePixel();
+              return;
+            }
+            render();
+          });
+        })(opts[i]);
+      }
+      var back = el('pqBack');
+      if (back) back.addEventListener('click', function(){
+        state.step = Math.max(1, state.step - 1);
+        render();
+      });
+      var restart = el('pqRestart');
+      if (restart) restart.addEventListener('click', function(){
+        state = { pet: null, trait: null, size: null, step: 1 };
+        render();
+      });
+      var send = el('pqSend');
+      if (send) send.addEventListener('click', function(){
+        var input = el('pqEmail');
+        var email = input ? input.value.trim() : '';
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+          if (input) { input.focus(); input.style.borderColor = '#d33'; }
+          return;
+        }
+        sendWebhook(email);
+        var sent = el('pqSent');
+        if (sent) sent.style.display = 'block';
+        send.disabled = true;
+      });
+    }
+
+    // Auto-init when the container exists; also safe to embed via <div id="pet-quiz"></div>.
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', render);
+    } else {
+      render();
+    }
+    window.renderPetQuiz = render;
+  })();
+  </script>
+</body>
+</html>
